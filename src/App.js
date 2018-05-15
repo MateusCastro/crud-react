@@ -19,23 +19,27 @@ class App extends Component {
     let nome = this.refs.nome.value // Recebe as informações do input nome
     let cargo = this.refs.cargo.value // Recebe as informações do input Cargo
 
-    if(this.state.acao == 0){ // Caso a ação seja de inserir
-      let dado = { // variável com modelo do dado
-        nome, cargo
+    if(nome.length != 0 && cargo.length != 0){
+      if(this.state.acao == 0){ // Caso a ação seja de inserir
+        let dado = { // variável com modelo do dado
+          nome, cargo
+        }
+        dados.push(dado) // inserindo na ultima posição da variável que recebe os dados
+      }else{ // caso a ação seja de alterar
+        let indice = this.state.indice // Recebe a posição do dado no array
+        dados[indice].nome = nome // Altera o campo nome
+        dados[indice].cargo = cargo // Altera o campo cargo
       }
-      dados.push(dado) // inserindo na ultima posição da variável que recebe os dados
-    }else{ // caso a ação seja de alterar
-      let indice = this.state.indice // Recebe a posição do dado no array
-      dados[indice].nome = nome // Altera o campo nome
-      dados[indice].cargo = cargo // Altera o campo cargo
+
+      this.setState({ // Método para setar a variável state
+        dados: dados, // recebe os dados atualizados
+        acao: 0 // retorna o campo acao para o valor default
+      })
+
+      this.refs.formulario.reset() // reseta o formulário
+    }else{
+      alert("Preencha todos os campos")
     }
-
-    this.setState({ // Método para setar a variável state
-      dados: dados, // recebe os dados atualizados
-      acao: 0 // retorna o campo acao para o valor default
-    })
-
-    this.refs.formulario.reset() // reseta o formulário
   }
 
   remover = (i) => {
